@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Smart Conveyor System Simulator</title>
+  <style>
+    body {
+      background: #222;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    #controls {
+      margin: 16px 20px 24px;
+      padding: 16px 20px;
+      background: #2b2b2b;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+      display: inline-flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 340px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: #3b82f6;
+      color: #fff;
+      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    button:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    #start {
+      background: #22c55e;
+    }
+
+    #start:hover {
+      background: #16a34a;
+    }
+
+    #stop {
+      background: #ef4444;
+    }
+
+    #stop:hover {
+      background: #dc2626;
+    }
+
+    #removeAll,
+    #restart {
+      background: #6b7280;
+    }
+
+    #removeAll:hover,
+    #restart:hover {
+      background: #4b5563;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .status-item {
+      white-space: nowrap;
+    }
+
+    #scene-container {
+      width: 800px;
+      height: 400px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+      background: #111;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 900px) {
+      #scene-container {
+        width: 95vw;
+        height: 50vh;
+      }
+
+      #controls {
+        width: 95vw;
+        box-sizing: border-box;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>3D Smart Conveyor System Simulator</h1>
+  <div id="controls">
+    <div class="control-row">
+      <div class="button-group">
+        <button id="addBox">Add Box</button>
+        <button id="removeBox">Remove Box</button>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="removeAll">Remove All</button>
+        <button id="restart">Restart</button>
+      </div>
+    </div>
+    <div class="control-row status-row">
+      <span class="status-item" id="speed">Speed: 10.0</span>
+      <span class="status-item" id="boxCount">Boxes: 0</span>
+      <span class="status-item" id="weight">Weight: 0.0 kg</span>
+      <span class="status-item" id="boxInfo">(Each box weight: 0.5 kg)</span>
+    </div>
+  </div>
+  <div id="scene-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

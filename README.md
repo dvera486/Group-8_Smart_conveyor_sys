@@ -1,0 +1,25 @@
+# Smart Conveyor System Simulator
+
+This project simulates a simple smart conveyor system using Python and Tkinter. The conveyor slows down as more boxes are added, based on their weight. The GUI allows users to add or remove boxes and displays the current speed and number of boxes.
+
+## Features
+- Add/remove boxes with buttons
+- Conveyor speed decreases as total weight increases
+- Simple physics simulation
+- Real-time display of speed and box count
+
+## How to Run
+1. Ensure Python 3.x is installed
+2. Run `python main.py` to start the simulator
+
+## Structure
+- `main.py`: Entry point and GUI
+- `conveyor.py`: Conveyor logic and physics
+- `box.py`: Box properties
+
+## Requirements
+- Python 3.x
+- Tkinter (usually included with Python)
+
+## License
+MIT License
