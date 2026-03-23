@@ -120,6 +120,90 @@
       margin-bottom: 32px;
     }
 
+    /* Simple modal for box travel results */
+    #result-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    #result-modal {
+      width: 100%;
+      max-width: 520px;
+      background: #1f2937;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 18px 18px 14px;
+    }
+
+    #result-modal h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    #result-modal .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.98rem;
+    }
+
+    #result-modal .row:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    #result-modal .label {
+      opacity: 0.9;
+    }
+
+    #result-modal .value {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #result-modal-close {
+      margin-top: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    input[type="number"] {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
     @media (max-width: 900px) {
       #scene-container {
         width: 95vw;
@@ -146,6 +230,80 @@
         <button id="restart">Restart</button>
       </div>
     </div>
+    <div class="control-row" style="gap:12px;">
+      <span style="opacity:0.95; font-weight:600;">Input factor:</span>
+      <label style="display:flex; gap:6px; align-items:center; font-weight:500;">
+        <input type="radio" name="inputFactor" value="speed" checked />
+        Speed
+      </label>
+      <label style="display:flex; gap:6px; align-items:center; font-weight:500;">
+        <input type="radio" name="inputFactor" value="length" />
+        Belt length
+      </label>
+      <label style="display:flex; gap:6px; align-items:center; font-weight:500;">
+        <input type="radio" name="inputFactor" value="time" />
+        Time
+      </label>
+      <label style="display:flex; gap:6px; align-items:center; font-weight:500;">
+        <input type="radio" name="inputFactor" value="weight" />
+        Box weight
+      </label>
+    </div>
+
+    <div class="control-row" id="speedInputRow">
+      <label for="baseSpeedInput" style="opacity:0.95; font-weight:600;">Desired speed (m/s)</label>
+      <input
+        id="baseSpeedInput"
+        type="number"
+        step="0.1"
+        min="0"
+        value="10.0"
+      />
+    </div>
+
+    <div class="control-row" id="lengthInputRow" style="display:none;">
+      <label for="beltLengthInput" style="opacity:0.95; font-weight:600;">Belt length (m)</label>
+      <input
+        id="beltLengthInput"
+        type="number"
+        step="1"
+        min="0"
+        placeholder="e.g. 40"
+      />
+    </div>
+
+    <div class="control-row" id="timeInputRow" style="display:none;">
+      <label for="travelTimeInput" style="opacity:0.95; font-weight:600;">Travel time (s)</label>
+      <input
+        id="travelTimeInput"
+        type="number"
+        step="0.01"
+        min="0"
+        placeholder="e.g. 4.0"
+      />
+    </div>
+
+    <div class="control-row" id="weightInputRow" style="display:none;">
+      <label for="boxWeightInput" style="opacity:0.95; font-weight:600;">Box weight (kg)</label>
+      <input
+        id="boxWeightInput"
+        type="number"
+        step="0.1"
+        min="0"
+        placeholder="e.g. 0.5"
+      />
+    </div>
+
+    <div class="control-row" style="gap:12px; margin-top:6px;">
+      <span style="opacity:0.95; font-weight:600;">Find/compute:</span>
+      <select id="computeSelect" aria-label="What to compute" style="min-width: 240px;">
+        <option value="speed" selected>Speed</option>
+        <option value="length">Belt length</option>
+        <option value="time">Time</option>
+        <option value="weight">Box weight</option>
+      </select>
+    </div>
+
     <div class="control-row status-row">
       <span class="status-item" id="speed">Speed: 10.0</span>
       <span class="status-item" id="boxCount">Boxes: 0</span>
@@ -154,6 +312,17 @@
     </div>
   </div>
   <div id="scene-container"></div>
+
+  <!-- Travel results modal -->
+  <div id="result-modal-overlay" aria-hidden="true">
+    <div id="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-modal-title">
+      <h2 id="result-modal-title">Box Travel Results</h2>
+      <div id="result-modal-subtitle" style="opacity:0.85; margin-bottom:12px;"></div>
+      <div id="result-modal-rows"></div>
+      <button id="result-modal-close" type="button">Close</button>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
   <script src="main.js"></script>
 </body>
